@@ -15,7 +15,6 @@ void metodtrapec(int n,  double shag, double *F )
 	double s = 0;
 	for (int i = 1;i < n;i++) {
 		s += ((shag)*(F[i] + F[i - 1]) / 2);
-		//cout << "integral=" << s << endl;
 	}
 	cout <<endl<< "integral=" << s << endl;
 }
