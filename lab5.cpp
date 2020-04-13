@@ -4,8 +4,10 @@
 //в ряд подынтегральную функцию), опишите это в файле Readme.md(формат markdown), желательно с формулами.
 
 
-#include "pch.h"
+//#include "pch.h"
 #include <iostream>
+#include <math.h>
+#include <cmath>
 using namespace std;
 
 //Метод трапеций для таблицы с шагом step
