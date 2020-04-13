@@ -1,4 +1,3 @@
-
 //У тех, у кого в билете функция задана таблицей, требуется сначала построить кубический сплайн,
 //и интегрировать уже его с каким - то малым шагом, контролируя погрешность по методу Рунге.
 //Если для вычисления интеграла Вам требуется его как - то преобразовать(например, сделать замену или разложить 
@@ -20,25 +19,33 @@ void metodtrapec(int n,  double shag, double *F )
 	}
 	cout <<endl<< "integral=" << s << endl;
 }
+/*
+void splain(double *y) {
+	y[k] = a[k] + b[k] + c[k] + d[k];
 
+}*/
 
 int main()
 {
 	int n = 9;			//количество столбцов
-	double *x, *F, shag;
+	double *x, *y, shag;
 	shag = 0.25;
 	x = new double[n];
-	F = new double[n];
-	F[0] = 0;		F[1] = 0.028;	F[2] = 0.054;
-	F[3] = 0.078;	F[4] = 0.1;		F[5] = 0.2;
-	F[6] = 0.133;	F[7] = 0.145;	F[8] = 0.154;
-	double c = 0;
-	for (int i = 0;c < n;c++) {
-		x[i] = c / 4;
-		cout << x[i]<<" | "<<F[i] << endl;
+	y = new double[n];
+	y[0] = 0;		y[1] = 0.028;	y[2] = 0.054;
+	y[3] = 0.078;	y[4] = 0.1;		y[5] = 0.2;
+	y[6] = 0.133;	y[7] = 0.145;	y[8] = 0.154;
+	double cz = 0;
+	for (int i = 0;cz < n;cz++) {
+
+		x[i] = cz / 4;
+		cout << x[i]<<" | "<< y[i] << endl;
+		i++;
 	}
 
-	metodtrapec(n, shag, F);
+
+
+	metodtrapec(n, shag, y);
 
 	system("pause");
 }
