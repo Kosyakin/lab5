@@ -24,32 +24,45 @@ void splain(double *y, double *x, double *c, double *d, double *b, int n) {
 	double start = x[0];
 	double end = x[n-1];
 	
-	double step = (end - start) /16;
+	int n1=32;
+
+
+
+	double step = (end - start) /n1;
 	cout << step;
 	printf("y\t\tx\n");
 
-	for (int i = 1;i < n;i++) 
+	double *x1, *y1;
+	x1 = new double[n1];
+	y1 = new double[n1];
+
+
+	for (int i = 0;i <n;i++) 
 		printf("%f\t%f\n", y[i], x[i]);
 	cout << "\n\n\n";
 
 	int k = 0;
+	int i = 0;
 	for (double s = start; s <= end; s += step) {
-		
 
-		
-		for (int k = 0; k <= n; k++) {
-			if (s >= x[k] && s <= x[k]) {
+		for (k = 1; k <= n; k++) {
+			if (s >= x[k - 1] && s <= x[k]) {
 				break;
 			}
-			
-		}
-		double F = y[k] + b[k] * (s - x[k]) + c[k] * pow(s - x[k], 2) + d[k] * pow(s - x[k], 3);
 
-		printf("%f\t%f\n", F, s);
-		k++;
+		}
+		
+			double F = y[k] + b[k] * (s - x[k]) + c[k] * pow(s - x[k], 2) + d[k] * pow(s - x[k], 3);
+			printf("%f\t%f\n", F, s);
+			k++;
+
+		
+		y1[i] = F;
+		i++;
+	
 	}
 
-	
+	metodtrapec(n1, step, y1);
 }
 void coef(double *y, double *x, double *c, double *d, double *b, int n) {
 
@@ -100,8 +113,8 @@ int main()
 
 	int k = 0;
 	int n = 9;			//количество столбцов
-	double *x, *y, shag;
-	shag = 0.25;
+	double *x, *y, step;
+	step = 0.25;
 	x = new double[n];
 	y = new double[n];
 	y[0] = 0;		y[1] = 0.028;	y[2] = 0.054;
@@ -124,7 +137,7 @@ int main()
 	b = new double[n];
 	
 	
-	metodtrapec(n, shag, y);
+	metodtrapec(n, step, y);
 	
 	coef(y, x, c, b, d, n);
 	splain(y, x, c, b, d, n);
