@@ -21,6 +21,8 @@ void metodtrapec(int n,  double shag, double *F )
 	cout <<endl<< "integral=" << s << endl;
 }
 
+
+
 void splain(double *y, double *x, double *c, double *d, double *b, int n) {
 	double start = x[0];
 	double end = x[n-1];
@@ -66,6 +68,10 @@ void splain(double *y, double *x, double *c, double *d, double *b, int n) {
 
 	metodtrapec(n1, step, y1);
 }
+
+
+
+
 void coef(double *y, double *x, double *c, double *d, double *b, int n) {
 
 	double *h, *l, *delta, *lambda;
@@ -108,6 +114,8 @@ void coef(double *y, double *x, double *c, double *d, double *b, int n) {
 		printf("%f\t%f\t%f\t%f\n", y[k], b[k], c[k], d[k]);
 	}
 }
+
+
 
 
 int main()
