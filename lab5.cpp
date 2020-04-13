@@ -8,7 +8,7 @@
 #include <iostream>
 using namespace std;
 
-//Метод трапеций для таблицы с шагом 0.25
+//Метод трапеций для таблицы с шагом step
 
 void metodtrapec(int n,  double shag, double *F )
 {
@@ -28,7 +28,7 @@ void splain(double *y, double *x, double *c, double *d, double *b, int n) {
 
 
 	double step = (end - start) /n1;
-	cout << step;
+	cout << "\n\n";
 	printf("y\t\tx\n");
 
 	double *x1, *y1;
@@ -39,7 +39,7 @@ void splain(double *y, double *x, double *c, double *d, double *b, int n) {
 	for (int i = 0;i <n;i++) 
 		printf("%f\t%f\n", y[i], x[i]);
 	cout << "\n\n\n";
-
+	printf("y\t\tx\n");
 	int k = 0;
 	int i = 0;
 	for (double s = start; s <= end; s += step) {
@@ -60,6 +60,7 @@ void splain(double *y, double *x, double *c, double *d, double *b, int n) {
 		i++;
 	
 	}
+	cout << "\n\n" << "step=" << step << "\n\n";
 
 	metodtrapec(n1, step, y1);
 }
@@ -72,7 +73,7 @@ void coef(double *y, double *x, double *c, double *d, double *b, int n) {
 	delta = new double[n];
 	lambda = new double[n];
 
-
+	cout << "\n\n" << "koeficienti:" << "\n\n";
 	for (int k = 1; k <= n; k++) {
 		h[k] = x[k] - x[k - 1];
 		if (h[k] == 0) {
@@ -120,11 +121,11 @@ int main()
 	y[3] = 0.078;	y[4] = 0.1;		y[5] = 0.2;
 	y[6] = 0.133;	y[7] = 0.145;	y[8] = 0.154;
 	double cz = 0;
-	printf("x\t\ty\n");
+	//printf("x\t\ty\n");
 	for (int i = 0;cz < n;cz++) {
 
 		x[i] = cz / 4;
-		printf("%f\t%f\n", x[i], y[i]);
+		//printf("%f\t%f\n", x[i], y[i]);
 		i++;
 	}
 
@@ -136,7 +137,7 @@ int main()
 	b = new double[n];
 	
 	
-	metodtrapec(n, step, y);
+	//metodtrapec(n, step, y);
 	
 	coef(y, x, c, b, d, n);
 	splain(y, x, c, b, d, n);
@@ -144,3 +145,4 @@ int main()
 
 	system("pause");
 }
+
