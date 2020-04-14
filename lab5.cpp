@@ -12,11 +12,11 @@ using namespace std;
 
 //Метод трапеций для таблицы с шагом step
 
-double metodtrapec(int n, double shag, double *F)
+double metodtrapec(int n, double step, double *F)
 {
 	double s = 0;
 	for (int i = 1;i < n;i++) {
-		s += ((shag)*(F[i] + F[i - 1]) / 2);
+		s += ((step)*(F[i] + F[i - 1]) / 2);
 	}
 	cout << endl << "integral=" << s << endl;
 	return s;
@@ -70,9 +70,9 @@ double splain(double *y, double *x, double *c, double *d, double *b, int n, int 
 
 	}
 	cout << "\n\n" << "step=" << step << "\n\n";
-
-	metodtrapec(n1, step, y1);
-	return runge;
+	double sss;
+	sss=metodtrapec(n1, step, y1);
+	return sss;
 }
 
 
@@ -123,12 +123,15 @@ void coef(double *y, double *x, double *c, double *d, double *b, int n) {
 }
 
 
+
+//Идея состоит в том, чтобы организовав вычисления значений интеграла по нескольким семействам (множествам) узлов, затем сравнить результаты
+//вычислений и получить оценку погрешности. Наиболее удобное правило связано с вычислением интеграла дважды: LN[f], L2N[f]. 
 void runge(double *y, double * x, double * c, double * b, double *d,int n, int n2) {
 	double L, Ln, L2n;
-	Ln= splain(y, x, c, b, d, n, n);
+	Ln= splain(y, x, c, b, d, n, n-1);
 	L2n=splain(y, x, c, b, d, n, n2);
 	L = Ln - L2n;
-	cout << "\n\nOcenka pogreshnosti po pravilu Runge:" << L <<"\n\n";
+	cout << "\n\nOcenka pogreshnosti po pravilu Runge:" << Ln - L2n <<"\n\n";
 }
 
 
@@ -172,6 +175,7 @@ int main()
 	coef(y, x, c, b, d, n);
 	splain(y, x, c, b, d, n, n1);
 	runge(y, x, c, b, d, n, n2);
+	
 
 	system("pause");
 }
