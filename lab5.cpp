@@ -13,24 +13,31 @@ using namespace std;
 
 //Метод трапеций для таблицы с шагом step
 
-void metodtrapec(int n,  double shag, double *F )
+double metodtrapec(int n, double shag, double *F)
 {
 	double s = 0;
 	for (int i = 1;i < n;i++) {
 		s += ((shag)*(F[i] + F[i - 1]) / 2);
 	}
-	cout <<endl<< "integral=" << s << endl;
+	cout << endl << "integral=" << s << endl;
+	return s;
 }
 
-void splain(double *y, double *x, double *c, double *d, double *b, int n) {
+
+
+
+//построение точек сплайна
+double splain(double *y, double *x, double *c, double *d, double *b, int n, int n1) {
 	double start = x[0];
-	double end = x[n-1];
-	
-	int n1=32;
+	double end = x[n - 1];
+
+	double runge=0;
 
 
 
-	double step = (end - start) /n1;
+
+
+	double step = (end - start) / n1;
 	cout << "\n\n";
 	printf("y\t\tx\n");
 
@@ -39,7 +46,7 @@ void splain(double *y, double *x, double *c, double *d, double *b, int n) {
 	y1 = new double[n1];
 
 
-	for (int i = 0;i <n;i++) 
+	for (int i = 0;i < n;i++)
 		printf("%f\t%f\n", y[i], x[i]);
 	cout << "\n\n\n";
 	printf("y\t\tx\n");
@@ -53,19 +60,20 @@ void splain(double *y, double *x, double *c, double *d, double *b, int n) {
 			}
 
 		}
-		
-			double F = y[k] + b[k] * (s - x[k]) + c[k] * pow(s - x[k], 2) + d[k] * pow(s - x[k], 3);
-			printf("%f\t%f\n", F, s);
-			k++;
 
-		
+		double F = y[k] + b[k] * (s - x[k]) + c[k] * pow(s - x[k], 2) + d[k] * pow(s - x[k], 3);
+		printf("%f\t%f\n", F, s);
+		k++;
+
+
 		y1[i] = F;
 		i++;
-	
+
 	}
 	cout << "\n\n" << "step=" << step << "\n\n";
 
 	metodtrapec(n1, step, y1);
+	return runge;
 }
 
 
@@ -108,11 +116,20 @@ void coef(double *y, double *x, double *c, double *d, double *b, int n) {
 	}
 
 	int k = 0;
-		printf("\nA[k]\t\tB[k]\t\tC[k]\t\tD[k]\n");
+	printf("\nA[k]\t\tB[k]\t\tC[k]\t\tD[k]\n");
 
 	for (k = 1; k <= n; k++) {
 		printf("%f\t%f\t%f\t%f\n", y[k], b[k], c[k], d[k]);
 	}
+}
+
+
+void runge(double *y, double * x, double * c, double * b, double *d,int n, int n2) {
+	double L, Ln, L2n;
+	Ln= splain(y, x, c, b, d, n, n);
+	L2n=splain(y, x, c, b, d, n, n2);
+	L = Ln - L2n;
+	cout << "\n\nOcenka pogreshnosti po pravilu Runge:" << L <<"\n\n";
 }
 
 
@@ -122,7 +139,11 @@ int main()
 {
 
 	int k = 0;
-	int n = 9;			//количество столбцов
+	int n = 9;		//количество столбцов
+	int n1 = 32;	//количество столбцов у сплайна
+	int n2 = 16;	//для рунге
+
+
 	double *x, *y, step;
 	step = 0.25;
 	x = new double[n];
@@ -145,14 +166,13 @@ int main()
 	c = new double[n];
 	d = new double[n];
 	b = new double[n];
-	
-	
-	//metodtrapec(n, step, y);
-	
-	coef(y, x, c, b, d, n);
-	splain(y, x, c, b, d, n);
 
+
+	//metodtrapec(n, step, y);
+
+	coef(y, x, c, b, d, n);
+	splain(y, x, c, b, d, n, n1);
+	runge(y, x, c, b, d, n, n2);
 
 	system("pause");
 }
-
