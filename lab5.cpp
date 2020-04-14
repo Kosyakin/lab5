@@ -18,7 +18,9 @@ double metodtrapec(int n, double step, double *F)
 	for (int i = 1;i < n;i++) {
 		s += ((step)*(F[i] + F[i - 1]) / 2);
 	}
-	cout << endl << "integral=" << s << endl;
+	if (n != 8 && n != 16) {
+	cout << endl << "integral dlya "<<n<<" tochek = " << s << endl;
+}
 	return s;
 }
 
@@ -30,25 +32,30 @@ double splain(double *y, double *x, double *c, double *d, double *b, int n, int 
 	double start = x[0];
 	double end = x[n - 1];
 
-	double runge=0;
+	double runge = 0;
 
 
 
 
 
 	double step = (end - start) / n1;
-	cout << "\n\n";
-	printf("y\t\tx\n");
-
+	if (n1 != 8 && n1 != 16) {
+		cout << "\n\nTochki do primeneniya splina:" << "\n\n";
+		cout << "\n\n";
+		printf("y\t\tx\n");
+	}
 	double *x1, *y1;
 	x1 = new double[n1];
 	y1 = new double[n1];
-
-
+	
+	if (n1 != 8 && n1 != 16) //для просчета погрешности, чтобы не было лишних выводов на экран
+	{
 	for (int i = 0;i < n;i++)
 		printf("%f\t%f\n", y[i], x[i]);
 	cout << "\n\n\n";
+	cout << "\n\nTochki posle primeneniya splina:" << "\n\n";
 	printf("y\t\tx\n");
+	}
 	int k = 0;
 	int i = 0;
 	for (double s = start; s <= end; s += step) {
@@ -61,7 +68,10 @@ double splain(double *y, double *x, double *c, double *d, double *b, int n, int 
 		}
 
 		double F = y[k] + b[k] * (s - x[k]) + c[k] * pow(s - x[k], 2) + d[k] * pow(s - x[k], 3);
-		printf("%f\t%f\n", F, s);
+		if (n1 != 8 && n1 != 16) //для просчета погрешности, чтобы не было лишних выводов на экран
+		{
+			printf("%f\t%f\n", F, s);
+		}
 		k++;
 
 
@@ -69,7 +79,10 @@ double splain(double *y, double *x, double *c, double *d, double *b, int n, int 
 		i++;
 
 	}
-	cout << "\n\n" << "step=" << step << "\n\n";
+	if (n1 != 8 && n1 != 16) //для просчета погрешности, чтобы не было лишних выводов на экран
+	{
+		cout << "\n\n" << "step=" << step << "\n\n";
+	}
 	double sss;
 	sss=metodtrapec(n1, step, y1);
 	return sss;
@@ -131,7 +144,8 @@ void runge(double *y, double * x, double * c, double * b, double *d,int n, int n
 	Ln= splain(y, x, c, b, d, n, n-1);
 	L2n=splain(y, x, c, b, d, n, n2);
 	L = Ln - L2n;
-	cout << "\n\nOcenka pogreshnosti po pravilu Runge:" << Ln - L2n <<"\n\n";
+	if (L < 0) { L = L * (-1); }
+	cout << "\n\nOcenka pogreshnosti po pravilu Runge:" << L <<"\n\n";
 }
 
 
