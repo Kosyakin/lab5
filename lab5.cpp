@@ -8,6 +8,7 @@
 #include <iostream>
 #include <math.h>
 #include <cmath>
+
 using namespace std;
 
 //Метод трапеций для таблицы с шагом step
@@ -20,8 +21,6 @@ void metodtrapec(int n,  double shag, double *F )
 	}
 	cout <<endl<< "integral=" << s << endl;
 }
-
-
 
 void splain(double *y, double *x, double *c, double *d, double *b, int n) {
 	double start = x[0];
@@ -68,6 +67,7 @@ void splain(double *y, double *x, double *c, double *d, double *b, int n) {
 
 	metodtrapec(n1, step, y1);
 }
+
 
 
 
