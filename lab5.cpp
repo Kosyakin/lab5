@@ -10,7 +10,7 @@
 
 using namespace std;
 
-//Метод трапеций для таблицы с шагом step
+//Метод трапеций для таблицы с шагом step(считаю полный интегралл)
 
 double metodtrapec(int n, double step, double *F)
 {
