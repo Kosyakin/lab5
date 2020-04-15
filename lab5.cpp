@@ -10,12 +10,12 @@
 
 using namespace std;
 
-//Метод трапеций для таблицы с шагом step(считаю полный интегралл)
+//Метод трапеций для таблицы с шагом step
 
-double metodtrapec(int n, double step, double *F)
+double metodtrapec(int n, double step, double *F,double L)
 {
 	double s = 0;
-	ofstream out1("ans1.dat");
+	ofstream out("ans1.dat");
 	for (int i = 1;i < n;i++) {
 		s += ((step)*(F[i] + F[i - 1]) / 2);
 
@@ -24,9 +24,9 @@ double metodtrapec(int n, double step, double *F)
 	
 		
 	cout << endl << "polnyi integral dlya "<<n<<" tochek = " << s << endl;
-	out1 << s << endl;
+	out << s<<"\t"<< L << endl;
 }	
-	out1.close();
+	out.close();
 	return s;
 }
 
@@ -34,7 +34,7 @@ double metodtrapec(int n, double step, double *F)
 
 
 //построение точек сплайна
-double splain(double *y, double *x, double *c, double *d, double *b, int n, int n1) {
+double splain(double *y, double *x, double *c, double *d, double *b, int n, int n1, double L) {
 	double start = x[0];
 	double end = x[n - 1];
 
@@ -90,7 +90,8 @@ double splain(double *y, double *x, double *c, double *d, double *b, int n, int 
 		cout << "\n\n" << "step=" << step << "\n\n";
 	}
 	double sss;
-	sss=metodtrapec(n1, step, y1);
+
+	sss=metodtrapec(n1, step, y1,L);
 	return sss;
 }
 
@@ -145,13 +146,17 @@ void coef(double *y, double *x, double *c, double *d, double *b, int n) {
 
 //Идея состоит в том, чтобы организовав вычисления значений интеграла по нескольким семействам (множествам) узлов, затем сравнить результаты
 //вычислений и получить оценку погрешности. Наиболее удобное правило связано с вычислением интеграла дважды: LN[f], L2N[f]. 
-void runge(double *y, double * x, double * c, double * b, double *d,int n, int n2) {
+double runge(double *y, double * x, double * c, double * b, double *d,int n, int n2) {
 	double L, Ln, L2n;
-	Ln= splain(y, x, c, b, d, n, n-1);
-	L2n=splain(y, x, c, b, d, n, n2);
+	Ln= splain(y, x, c, b, d, n, n-1,0);
+	L2n=splain(y, x, c, b, d, n, n2,0);
 	L = Ln - L2n;
 	if (L < 0) { L = L * (-1); }
+	ofstream out1("ans1.dat");
 	cout << "\n\nOcenka pogreshnosti po pravilu Runge:" << L <<"\n\n";
+	out1 << "\t" << L;
+	out1.close();
+	return L;
 }
 
 
@@ -164,7 +169,7 @@ int main()
 	int n = 9;		//количество столбцов
 	int n1 = 32;	//количество столбцов у сплайна
 	int n2 = 16;	//для рунге
-
+	
 
 	double *x, *y, step;
 	step = 0.25;
@@ -193,9 +198,10 @@ int main()
 	//metodtrapec(n, step, y);
 
 	coef(y, x, c, b, d, n);
-	splain(y, x, c, b, d, n, n1);
-	runge(y, x, c, b, d, n, n2);
+	double L = runge(y, x, c, b, d, n, n2);
+	splain(y, x, c, b, d, n, n1,L);
 	
+
 
 	system("pause");
 }
