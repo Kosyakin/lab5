@@ -2,11 +2,11 @@
 //и интегрировать уже его с каким - то малым шагом, контролируя погрешность по методу Рунге.
 
 
-
 //#include "pch.h"
 #include <iostream>
 #include <math.h>
 #include <cmath>
+#include<fstream>
 
 using namespace std;
 
@@ -15,12 +15,18 @@ using namespace std;
 double metodtrapec(int n, double step, double *F)
 {
 	double s = 0;
+	ofstream out1("ans1.dat");
 	for (int i = 1;i < n;i++) {
 		s += ((step)*(F[i] + F[i - 1]) / 2);
+
 	}
 	if (n != 8 && n != 16) {
-	cout << endl << "integral dlya "<<n<<" tochek = " << s << endl;
-}
+	
+		
+	cout << endl << "polnyi integral dlya "<<n<<" tochek = " << s << endl;
+	out1 << s << endl;
+}	
+	out1.close();
 	return s;
 }
 
