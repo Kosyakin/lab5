@@ -1,5 +1,5 @@
 all:
-	g++ lab5.cpp -o main
+	g++ lab5.cpp -o lab5
 	
 run:
 	lab5
